@@ -1,5 +1,6 @@
 import {authWithToken, logout, logIn} from "../../API/Auth"
 import {updateUser} from "./UserInfo"
+import {Alert} from "react-native"
 
 const AUTHENTICATING = "AUTHENTICATING"
 const NOT_AUTH = "NOT_AUTH"
@@ -41,7 +42,11 @@ export function handleAuthWithFirebase(){
                 fbFriends: userData.friends.data
             }
             dispatch(updateUser(user))
-        }).catch((error) => console.log("Something with the login process went wrong.", error.message))
+        }).catch((error) => {
+            Alert.alert("Something with the log in process went wrong.
+            Check your internet connection and restart the app")
+            console.log("Something with the log in process went wrong.", error.message)
+        })
     }
 }
 
