@@ -29,6 +29,9 @@ export default function Login(props){
                         Login with Facebook
                     </Text>
                 </TouchableOpacity>
+                <Text style={styles.disclaimer}>
+                    Don´t worry. We don´t post anything to Facebook.
+                </Text>
             </View>
         </View>
     )
@@ -58,13 +61,15 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
     fbLoginButton: {
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "stretch",
         borderRadius: 5,
-        marginRight: 15,
-        marginLeft: 15,
+        marginRight: 10,
+        marginLeft: 10,
         backgroundColor: colors.facebook,
     },
     fbLoginButtonText: {
@@ -72,5 +77,11 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: "bold",
         margin: 7,
+    },
+    disclaimer: {
+        color: "white",
+        fontSize: 15,
+        opacity: 0.9,
+        marginTop: 5,
     }
 })

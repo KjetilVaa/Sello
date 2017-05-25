@@ -13,17 +13,21 @@ export function logout(){
     ref.off()
 }
 
+export function updateUserInDatabase(uid, info){
+    return ref.child("users/" + uid).update(info)
+}
+
 export async function logIn(){
     const { type, token } = await Expo.Facebook.
     logInWithReadPermissionsAsync(appId, {
     permissions: ['public_profile', 'user_friends'],
     });
     if (type === 'success') {
-        // Get the user's info using Facebook's Graph API
-        const response = await fetch("https://graph.facebook.com/me?fields=name,friends,picture&access_token=" + token)
-        let userData = await response.json()
         //Logging in with firebase
         await authWithToken(token)
-        return userData
+
+    }
+    if (type === "cancel"){
+        Alert.alert("Login cancelled")
     }
 }
