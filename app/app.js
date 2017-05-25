@@ -12,6 +12,7 @@ import PreSplash from "./Components/Animations/PreSplash"
 import {firebaseAuth} from "./Config/Constants"
 import {onAuthChanged} from "./Redux/Modules/Authentication"
 import {hideFlashNotification} from "./Redux/Modules/FlashNotification"
+import {Tabs} from "./Containers/NavigationContainer/RootNavigator"
 
 
 class App extends Component {
@@ -29,7 +30,7 @@ class App extends Component {
             <View style={{flex: 1}}>
                 {this.props.isAuthenticating === true
                     ? <PreSplash />
-                    : <RootNavigator isAuth={this.props.isAuth}/>
+                    : <Tabs />
                 }
                 {this.props.showFlashNotification === true
                     ? <FlashNotification

@@ -65,7 +65,7 @@ export function onAuthChanged(user){
         }
         else{
             const {displayName, photoURL, uid} = user
-            updateUser({displayName, photoURL, uid})
+            dispatch(updateUser({displayName, photoURL, uid}))
             updateUserInDatabase(uid, {displayName, photoURL}).
             then(() => dispatch(isAuth()))
         }
@@ -74,7 +74,7 @@ export function onAuthChanged(user){
 
 const initialState = {
     token: "",
-    isAuthenticating: false,
+    isAuthenticating: true,
     isAuth: false,
 }
 

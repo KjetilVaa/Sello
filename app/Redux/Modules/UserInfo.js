@@ -4,7 +4,6 @@ const UPDATE_UID = "UPDATE_UID"
 
 
 export function updateUser(user){
-    console.log(user)
     return {
         type: UPDATE_USER,
         user,
@@ -54,8 +53,6 @@ export function UserInfo(state = initialState, action){
             uid: action.uid
         }
         default:
-        return {
-            state
-        }
+        return state
     }
 }
