@@ -17,15 +17,19 @@ class ProfileContainer extends Component {
                 displayName={this.props.displayName}
                 photoURL={this.props.photoURL}
                 handleLogout={this.handleLogout}
+                city={this.props.city}
+                country={this.props.country}
             />
         )
     }
 }
 
-function mapStateToProps({UserInfo}){
+function mapStateToProps({UserInfo, Location}){
     return {
         displayName: UserInfo.displayName,
         photoURL: UserInfo.photoURL,
+        city: Location.city,
+        country: Location.country,
     }
 }
 

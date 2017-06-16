@@ -4,6 +4,7 @@ import {
     Text,
     TextInput,
     StyleSheet,
+    TouchableOpacity,
 } from "react-native"
 import NavigationBar from "react-native-navbar"
 import {colors} from "../../Styles/Colors"
@@ -19,6 +20,16 @@ export default function BookFeed(props){
                 <Text>
                     Hey
                 </Text>
+            </View>
+            <View style={styles.bottomContainer}>
+                <TouchableOpacity
+                    style={styles.newBookButton}
+                    onPress={props.navigateToNewBook}
+                    >
+                    <Text style={styles.newBookButtonText}>
+                        New Book
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -37,4 +48,23 @@ const styles = StyleSheet.create({
     middleContainer: {
         flex: 10,
     },
+    bottomContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    newBookButton: {
+        backgroundColor: colors.primary,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+    newBookButtonText: {
+        color: "white",
+        fontSize: 16,
+        fontWeight: "bold"
+    }
 })

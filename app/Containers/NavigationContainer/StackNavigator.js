@@ -10,8 +10,11 @@ import {colors} from "../../Styles/Colors"
 import BookFeedContainer from "../BookFeedContainer/BookFeedContainer"
 import ChatContainer from "../ChatContainer/ChatContainer"
 import ProfileContainer from "../ProfileContainer/ProfileContainer"
+import NewBookContainer from "../NewBookContainer/NewBookContainer"
 
 //Stacks
+
+//BookFeedStack
 export const BookFeedStack = StackNavigator({
     BookFeedContainer: {
         screen: BookFeedContainer,
@@ -22,7 +25,15 @@ export const BookFeedStack = StackNavigator({
             },
             header: null,
         }
+    },
+    NewBookContainer: {
+        screen: NewBookContainer,
+        navigationOptions: {
+            title: "NewBook",
+            header: null,
+        },
     }
-},{
+},
+{
     initialRouteName: "BookFeedContainer",
 })

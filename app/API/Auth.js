@@ -9,7 +9,7 @@ function authWithToken(token){
 }
 
 export function logout(){
-    firebaseAuth.logout()
+    firebaseAuth.signOut()
     ref.off()
 }
 
