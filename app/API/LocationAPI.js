@@ -15,13 +15,15 @@ export async function getLocation() {
         location = await reverseGeoCodeCoordinates(coordinates)
         locFormat = await location.json()
         address = locFormat.address
-        console.log(locFormat)
         city = ""
         if("state" in address){
             city = address.state
         }
         else if("city" in address){
             city = address.city
+        }
+        else {
+            city = "unknown"
         }
         country = address.country
 
