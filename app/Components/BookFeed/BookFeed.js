@@ -5,10 +5,12 @@ import {
     TextInput,
     StyleSheet,
     TouchableOpacity,
+    FlatList,
 } from "react-native"
 import NavigationBar from "react-native-navbar"
 import {colors} from "../../Styles/Colors"
 import SearchBar from "../SearchBar/SearchBar"
+import FeedListItem from "./FeedListItem"
 
 export default function BookFeed(props){
     return (
@@ -17,9 +19,14 @@ export default function BookFeed(props){
                 <SearchBar />
             </View>
             <View style={styles.middleContainer}>
-                <Text>
-                    Hey
-                </Text>
+                <FlatList
+                    data={props.bookList}
+                    renderItem={({item}) =>
+                    <FeedListItem
+                        data={item}
+                    />}
+                    keyExtractor={(item, index) => (item, index)}
+                />
             </View>
             <View style={styles.bottomContainer}>
                 <TouchableOpacity

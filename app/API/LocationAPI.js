@@ -30,6 +30,8 @@ export async function getLocation() {
         location = {
             city: city,
             country: country,
+            lat: coordinates[0],
+            long: coordinates[1]
         }
         return location
     }
@@ -37,7 +39,7 @@ export async function getLocation() {
 
 async function reverseGeoCodeCoordinates(c) {
     //Getting location from google servers
-    url = "http://nominatim.openstreetmap.org/reverse?format=json&lat="+c[0]+"&lon="+c[1]+"&zoom=7&addressdetails=1"
+    url = "http://nominatim.openstreetmap.org/reverse?format=json&lat="+c[0]+"&lon="+c[1]+"&zoom=9&addressdetails=1"
     //url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+c[0]+","+c[1]+"&key=" + geoCoderKey
     return await fetch(url)
 }

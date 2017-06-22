@@ -5,22 +5,26 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    Alert,
 } from "react-native"
 
 import {colors} from "../../Styles/Colors"
 import {FontAwesome} from "@expo/vector-icons"
 import {Madoka} from 'react-native-textinput-effects';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import {showFlashNotification} from "../../Redux/Modules/FlashNotification";
+import {connect} from "react-redux";
+import {addBook} from "../../API/BooksAPI"
 
 
-export default class NewBook extends Component{
+
+class NewBook extends Component{
 
 
     constructor(props){
         super(props)
         this.state = {
             title: "",
-            edition: "",
             year: "",
             author: "",
             price: "",
@@ -34,8 +38,37 @@ export default class NewBook extends Component{
         ]
     }
 
-    handleFormValidation = () => {
-        console.log("heyo")
+    handleSubmit = () => {
+        if(this.state.title === ""){
+            this.props.dispatch(showFlashNotification({text: "Title cannot be empty"}))
+        }
+        else if(this.state.year.length < 4 || parseInt(this.state.year) < 0){
+            this.props.dispatch(showFlashNotification({text: "Invalid year"}))
+        }
+        else if(this.state.author === ""){
+            this.props.dispatch(showFlashNotification({text: "Author cannot be empty"}))
+        }
+        else if(this.state.price === "" || parseInt(this.state.price) < 0){
+            this.props.dispatch(showFlashNotification({text: "Invalid price"}))
+        }
+        else{
+            obj = {
+                uid: this.props.uid,
+                displayName: this.props.displayName,
+                title: this.state.title,
+                year: this.state.year,
+                author: this.state.author,
+                price: this.state.price,
+                used: this.state.used,
+            }
+            addBook(obj, this.props.country, [this.props.lat, this.props.long])
+            .then(() => {
+                this.props.navigateBack()
+            }).catch((error) => {
+                Alert.alert("Something went wrong while publishing the book.")
+                console.log(error.message)
+            })
+        }
     }
 
     render(){
@@ -63,17 +96,6 @@ export default class NewBook extends Component{
                               inputStyle={{ color: 'white' }}
                               onChangeText={(title) => this.setState({title})}
                               value={this.state.title}
-                            />
-                        </View>
-                        <View style={styles.singelTextInputContainer}>
-                            <Madoka
-                              label={'Edition'}
-                              // this is used as active and passive border color
-                              borderColor={"white"}
-                              labelStyle={{ color: 'white' }}
-                              inputStyle={{ color: 'white' }}
-                              onChangeText={(edition) => this.setState({edition})}
-                              value={this.state.edition}
                             />
                         </View>
                         <View style={styles.singelTextInputContainer}>
@@ -127,7 +149,7 @@ export default class NewBook extends Component{
                 <View style={styles.bottomContainer}>
                     <TouchableOpacity
                         style={styles.submitButton}
-                        onPress={this.handleFormValidation}
+                        onPress={this.handleSubmit}
                         >
                         <Text style={styles.submitButtonText}>
                             Submit
@@ -201,3 +223,17 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     }
 })
+
+function mapStateToProps({UserInfo, Location}){
+    return {
+        uid: UserInfo.uid,
+        displayName: UserInfo.displayName,
+        lat: Location.lat,
+        long: Location.long,
+        country: Location.country
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(NewBook)

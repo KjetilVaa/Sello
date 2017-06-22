@@ -1,4 +1,4 @@
-import React from "react"
+import React, {Component} from "react"
 import {
     View,
     Text,
@@ -9,52 +9,83 @@ import {
 } from "react-native"
 
 import {colors} from "../../Styles/Colors"
+import Slider from "react-native-slider"
+import {connect} from "react-redux"
 
 
 
-export default function Profile(props){
-    return(
-        <View style={styles.background}>
-            <View style={styles.upperContainer}>
-                <Text>
-                    Hey
-                </Text>
-            </View>
-            <View style={styles.middleContainer}>
-                <Image source={{uri: props.photoURL}} style={styles.image}/>
-                <Text style={styles.displayNameText}>
-                    {props.displayName}
-                </Text>
-                <Text style={styles.locationText}>
-                    {props.city}, {props.country}
-                </Text>
-            </View>
-            <View style={styles.bottomContainer}>
-                <TouchableOpacity
-                    style={styles.bookReceipts}
-                    >
-                    <Text style={styles.logOutButtonText}>
-                        Book Receipts
+class Profile extends Component{
+
+    constructor(props){
+        super(props)
+        this.state ={
+            radius: "25"
+        }
+    }
+
+    componentWillAnimateOut(){
+        console.log("heyo")
+    }
+
+    render(){
+        return(
+            <View style={styles.background}>
+                <View style={styles.upperContainer}>
+                </View>
+                <View style={styles.middleContainer}>
+                    <Image source={{uri: this.props.photoURL}} style={styles.image}/>
+                    <Text style={styles.displayNameText}>
+                        {this.props.displayName}
                     </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.settings}
-                    >
-                    <Text style={styles.logOutButtonText}>
-                        Settings
+                    <Text style={styles.locationText}>
+                        {this.props.city}, {this.props.country}
                     </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.logOutButton}
-                    onPress={props.handleLogout}
-                    >
-                    <Text style={styles.logOutButtonText}>
-                        Sign out
-                    </Text>
-                </TouchableOpacity>
+                </View>
+                <View style={styles.slider}>
+                    <View style={styles.sliderTextContainer}>
+                        <Text style={styles.sliderText}>
+                            {this.state.radius} km
+                        </Text>
+                    </View>
+                    <Slider
+                        value={parseInt(this.state.radius)}
+                        minimumValue={0}
+                        maximumValue={50}
+                        step={1}
+                        minimumTrackTintColor={colors.dark}
+                        maximumTrackTintColor={"white"}
+                        thumbTintColor={"white"}
+                        onValueChange={(radius) => this.setState({radius})}
+                        onSlidingComplete={(d) => this.props.handleRadiusChange(d)}
+                    />
+                </View>
+                <View style={styles.bottomContainer}>
+                    <TouchableOpacity
+                        style={styles.bookReceipts}
+                        >
+                        <Text style={styles.logOutButtonText}>
+                            Book Receipts
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.settings}
+                        >
+                        <Text style={styles.logOutButtonText}>
+                            Settings
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.logOutButton}
+                        onPress={this.props.handleLogout}
+                        >
+                        <Text style={styles.logOutButtonText}>
+                            Sign out
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
-    )
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -68,6 +99,20 @@ const styles = StyleSheet.create({
     middleContainer: {
         flex: 3,
         alignItems: "center",
+    },
+    slider: {
+        justifyContent: "center",
+        marginLeft: 25,
+        marginRight: 25,
+    },
+    sliderTextContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    sliderText: {
+        color: "white",
+        fontSize: 16,
+        fontWeight: "bold"
     },
     image: {
         margin: 0,
@@ -124,3 +169,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
     }
 })
+
+
+export default connect()(
+    Profile
+)

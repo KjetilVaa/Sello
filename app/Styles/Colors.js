@@ -4,4 +4,6 @@ export const colors = {
     facebook: "#3b5998",
     danger: "#e74c3c",
     darkDanger: "#e74c3c",
+    yellow: "#f1c40f",
+    orange: "#e67e22",
 }

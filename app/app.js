@@ -33,7 +33,7 @@ class App extends Component {
     }
 
     handleHideNotification = () => {
-        this.props.dispatch(hideFlashNotification)
+        this.props.dispatch(hideFlashNotification())
     }
 
     render(){

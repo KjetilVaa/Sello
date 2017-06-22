@@ -17,6 +17,10 @@ export function updateUserInDatabase(uid, info){
     return ref.child("users/" + uid).update(info)
 }
 
+export async function getProfilePicture(uid){
+    return await ref.child("users/" + uid + "/photoURL").once("value")
+}
+
 export async function logIn(){
     const { type, token } = await Expo.Facebook.
     logInWithReadPermissionsAsync(appId, {

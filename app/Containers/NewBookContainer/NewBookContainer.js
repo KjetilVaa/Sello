@@ -5,7 +5,7 @@ import NewBook from "../../Components/NewBook/NewBook"
 export default class NewBookContainer extends Component{
 
     navigateBack = () => {
-        console.log(this.props)
+        console.log("tilbake")
         this.props.navigation.goBack()
     }
 

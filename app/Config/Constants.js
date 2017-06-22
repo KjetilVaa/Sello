@@ -1,4 +1,5 @@
 import firebase from "firebase"
+import GeoFire from "geofire"
 
 firebase.initializeApp({
   apiKey: "AIzaSyDyvgbk7jlh6zUeTC7Qrz7tiwB15l-ruDk",
@@ -10,12 +11,15 @@ firebase.initializeApp({
 });
 
 const ref = firebase.database().ref()
+const geoFire = new GeoFire(ref.child("books"))
 const firebaseAuth = firebase.auth()
 const facebookProvider = firebase.auth.FacebookAuthProvider
 const appId = "1244206969002228"
 
+
 export {
     ref,
+    geoFire,
     firebaseAuth,
     facebookProvider,
     appId,

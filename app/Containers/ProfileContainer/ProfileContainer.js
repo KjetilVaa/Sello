@@ -4,11 +4,16 @@ import {connect} from "react-redux"
 
 import Profile from "../../Components/Profile/Profile"
 import {logout} from "../../API/Auth"
+import {setRadius} from "../../Redux/Modules/Location"
 
 class ProfileContainer extends Component {
 
     handleLogout = () => {
         logout()
+    }
+
+    handleRadiusChange = (radius) => {
+        setRadius(radius)
     }
 
     render(){
@@ -19,6 +24,7 @@ class ProfileContainer extends Component {
                 handleLogout={this.handleLogout}
                 city={this.props.city}
                 country={this.props.country}
+                handleRadiusChange={this.handleRadiusChange}
             />
         )
     }
