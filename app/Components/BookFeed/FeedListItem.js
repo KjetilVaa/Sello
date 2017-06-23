@@ -25,7 +25,7 @@ export default class FeedListItem extends Component{
     }
 
     priceStyle(){
-        if(this.props.data.used === "Barely used"){
+        if(this.props.data.used === "Barely Used"){
             return {
                 backgroundColor: colors.primary,
             }
@@ -35,7 +35,7 @@ export default class FeedListItem extends Component{
                 backgroundColor: colors.yellow,
             }
         }
-        else if(this.props.data.used === "Very used"){
+        else if(this.props.data.used === "Very Used"){
             return {
                 backgroundColor: colors.danger
             }
@@ -47,9 +47,17 @@ export default class FeedListItem extends Component{
         }
     }
 
+    preparePropsForNavigation = () => {
+        book = {
+            data: this.props.data,
+            photoURL: this.state.url
+        }
+        this.props.navigateToBookPreview(book)
+    }
+
     render(){
         return(
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.preparePropsForNavigation}>
                 <View style={styles.background}>
                     <View style={styles.upperContainer}>
                         <Image style={styles.image} source={{uri: this.state.url}} />
@@ -76,7 +84,7 @@ export default class FeedListItem extends Component{
                         </Text>
                         <View style={[styles.usedContainer, this.priceStyle()]}>
                             <Text style={styles.used}>
-                                Barely used
+                                {this.props.data.used}
                             </Text>
                         </View>
                     </View>
@@ -94,8 +102,8 @@ const styles = StyleSheet.create({
         height: 120,
         backgroundColor: "white",
         marginBottom: 6,
-        marginRight: 7,
-        marginLeft: 7,
+        marginRight: 4,
+        marginLeft: 4,
         borderBottomWidth: 4,
         borderTopWidth: 1,
         borderRightWidth: 1,

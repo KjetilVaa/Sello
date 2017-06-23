@@ -11,6 +11,7 @@ import BookFeedContainer from "../BookFeedContainer/BookFeedContainer"
 import ChatContainer from "../ChatContainer/ChatContainer"
 import ProfileContainer from "../ProfileContainer/ProfileContainer"
 import NewBookContainer from "../NewBookContainer/NewBookContainer"
+import BookPreviewContainer from "../BookPreviewContainer/BookPreviewContainer"
 
 //Stacks
 
@@ -32,7 +33,14 @@ export const BookFeedStack = StackNavigator({
             title: "NewBook",
             header: null,
         },
-    }
+    },
+    BookPreviewContainer: {
+        screen: BookPreviewContainer,
+        navigationOptions: {
+            title: "BookPreviewContainer",
+            header: null,
+        },
+    },
 },
 {
     initialRouteName: "BookFeedContainer",

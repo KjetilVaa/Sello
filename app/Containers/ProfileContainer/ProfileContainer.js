@@ -13,7 +13,7 @@ class ProfileContainer extends Component {
     }
 
     handleRadiusChange = (radius) => {
-        setRadius(radius)
+        this.props.dispatch(setRadius(radius))
     }
 
     render(){

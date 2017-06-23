@@ -5,6 +5,9 @@ const SET_BOOKS = "SET_BOOKS"
 const ADD_LISTENER = "ADD_LISTENER"
 const REMOVE_BOOKS = "REMOVE_BOOKS"
 const INIT_FINISHED = "INIT_FINISHED"
+const CLEAR_BOOKS = "CLEAR_BOOKS"
+const SAVE_GEOQUERY = "SAVE_GEOQUERY"
+const INIT_NOT_FINISHED = "INIT_NOT_FINISHED"
 
 function setBooks(books){
     return{
@@ -13,31 +16,16 @@ function setBooks(books){
     }
 }
 
-async function addPictureToBooks(books){
-    newBooks = {}
-    books.split("*")
-    var book = books.split("*")
-    await getProfilePicture(book[0]).then((snapshot) => {
-        url = snapshot.val()
-        newBooks = {
-            uid: book[0],
-            displayName: book[1],
-            photoURL: url,
-            title: book[2],
-            year: book[3],
-            author: book[4],
-            price: book[5],
-            used: book[6]
-        }
-    })
-    console.log(newBooks)
-    return newBooks
-}
-
 function removeBooks(books){
     return {
         type: REMOVE_BOOKS,
         books
+    }
+}
+
+export function clearBooks(){
+    return {
+        type: CLEAR_BOOKS,
     }
 }
 
@@ -53,17 +41,30 @@ function initFinished(){
     }
 }
 
+export function initNotFinished(){
+    return {
+        type: INIT_NOT_FINISHED,
+    }
+}
+
+function saveGeoQuery(query){
+    return{
+        type: SAVE_GEOQUERY,
+        query,
+    }
+}
+
 //center here is lat and long
-export function setAndFetchGeoFireQuery(center, radius){
+export function setAndFetchGeoFireQuery(center, radius, changed){
     return function(dispatch){
         console.log(center, radius)
         var geoQuery = geoFire.query({
             center: center,
             radius: parseInt(radius),
         })
-        //Ready vil si at init er ferdig.
-        //HUSK: Skal du endre queryCriteria må du sette initFinished=false
-        //igjen, og deretter true etter at den er ferdig.
+        dispatch(saveGeoQuery(geoQuery))
+
+        //Ready vil si at init er ferdig - blir resatt ved queryUpdate
         geoQuery.on("ready", function(books){
             dispatch(initFinished())
         })
@@ -96,6 +97,7 @@ const initialState = {
     books: [],
     listenerSet: false,
     initFinished: false,
+    geoquery: "",
 }
 
 
@@ -122,6 +124,21 @@ export function Books(state=initialState, action){
         return {
             ...state,
             initFinished: true
+        }
+        case CLEAR_BOOKS:
+        return {
+            ...state,
+            books: [],
+        }
+        case SAVE_GEOQUERY:
+        return {
+            ...state,
+            geoquery: action.query,
+        }
+        case INIT_NOT_FINISHED:
+        return {
+            ...state,
+            initFinished: false,
         }
         default:
             return state

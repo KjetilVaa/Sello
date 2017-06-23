@@ -24,8 +24,10 @@ export default function BookFeed(props){
                     renderItem={({item}) =>
                     <FeedListItem
                         data={item}
+                        navigateToBookPreview={props.navigateToBookPreview}
                     />}
                     keyExtractor={(item, index) => (item, index)}
+                    removeClippedSubviews={false}
                 />
             </View>
             <View style={styles.bottomContainer}>

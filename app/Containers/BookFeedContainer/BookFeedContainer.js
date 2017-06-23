@@ -1,25 +1,38 @@
 import React, {Component} from "react"
 
 import BookFeed from "../../Components/BookFeed/BookFeed"
-import {setAndFetchGeoFireQuery} from "../../Redux/Modules/Books"
+import {setAndFetchGeoFireQuery, clearBooks, initNotFinished} from "../../Redux/Modules/Books"
 import {connect} from "react-redux"
 
 
 class BookFeedContainer extends Component {
 
     componentDidMount(){
-        this.props.dispatch(setAndFetchGeoFireQuery([this.props.lat, this.props.long], this.props.radius))
+        this.props.dispatch(setAndFetchGeoFireQuery([this.props.lat, this.props.long], this.props.radius, false))
     }
 
     componentWillReceiveProps(nextProps){
         if(nextProps.bookList !== this.props.bookList){
             this.props.bookList = nextProps.bookList
         }
+        if(nextProps.radius !== this.props.radius){
+            this.props.dispatch(clearBooks())
+            this.props.dispatch(initNotFinished())
+            this.props.geoQuery.updateCriteria({
+                center: [this.props.lat, this.props.long],
+                radius: nextProps.radius
+            })
+        }
     }
 
     navigateToNewBook = () => {
-    this.props.navigation.navigate("NewBookContainer")
+        this.props.navigation.navigate("NewBookContainer")
     }
+
+    navigateToBookPreview = (book) => {
+        console.log("kjører")
+        console.log(this.props.navigation)
+        this.props.navigation.navigate("BookPreviewContainer", {book})    }
 
     render(){
         return(
@@ -27,6 +40,7 @@ class BookFeedContainer extends Component {
                 navigateToNewBook={this.navigateToNewBook}
                 bookList={this.props.bookList}
                 initFinished={this.props.initFinished}
+                navigateToBookPreview={this.navigateToBookPreview}
             />
         )
     }
@@ -38,7 +52,8 @@ function mapStateToProps({Location, Books}){
         long: Location.long,
         radius: Location.radius,
         bookList: Books.books,
-        initFinished: Books.initFinished
+        initFinished: Books.initFinished,
+        geoQuery: Books.geoquery
     }
 }
 

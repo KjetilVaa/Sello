@@ -19,12 +19,8 @@ class Profile extends Component{
     constructor(props){
         super(props)
         this.state ={
-            radius: "25"
+            radius: "30"
         }
-    }
-
-    componentWillAnimateOut(){
-        console.log("heyo")
     }
 
     render(){
@@ -49,7 +45,7 @@ class Profile extends Component{
                     </View>
                     <Slider
                         value={parseInt(this.state.radius)}
-                        minimumValue={0}
+                        minimumValue={10}
                         maximumValue={50}
                         step={1}
                         minimumTrackTintColor={colors.dark}
