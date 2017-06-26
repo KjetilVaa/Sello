@@ -4,15 +4,15 @@ import BookPreview from "../../Components/BookPreview/BookPreview"
 
 export default class BookPreviewContainer extends Component {
 
-    constructor(props){
-        super(props)
-        console.log("her",this.props.navigation.state.params.book.data)
+    navigateBack = () => {
+        this.props.navigation.goBack()
     }
 
     render(){
         return(
             <BookPreview
-
+                data={this.props.navigation.state.params.book.data}
+                navigateBack={this.navigateBack}
             />
         )
     }

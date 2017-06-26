@@ -20,7 +20,7 @@ const initialState = {
     country: "",
     lat: "",
     long: "",
-    radius: "25",
+    radius: "30",
 }
 
 export function Location(state=initialState, action){
