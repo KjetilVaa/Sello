@@ -11,6 +11,7 @@
     "geofire": "^4.1.2",
     "react": "16.0.0-alpha.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-17.0.0.tar.gz",
+    "react-native-gifted-chat": "^0.1.4",
     "react-native-navbar": "^1.7.1",
     "react-native-simple-radio-button": "^2.5.0-alpha.1",
     "react-native-slider": "^0.10.0",

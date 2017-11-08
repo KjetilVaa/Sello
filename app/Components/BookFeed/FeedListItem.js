@@ -15,13 +15,15 @@ export default class FeedListItem extends Component{
     constructor(props){
         super(props)
         this.state = {
-            url: "1"
+            url: ""
         }
     }
 
     componentDidMount(){
         getProfilePicture(this.props.data.uid)
-        .then((url) => this.setState({url: url.val()}))
+        .then((url) => {
+            this.setState({url: url.val()})
+        })
     }
 
     priceStyle(){
@@ -53,6 +55,7 @@ export default class FeedListItem extends Component{
             photoURL: this.state.url
         }
         this.props.navigateToBookPreview(book)
+
     }
 
     render(){
@@ -60,7 +63,9 @@ export default class FeedListItem extends Component{
             <TouchableOpacity onPress={this.preparePropsForNavigation}>
                 <View style={styles.background}>
                     <View style={styles.upperContainer}>
-                        <Image style={styles.image} source={{uri: this.state.url}} />
+                        {this.state.url === "" ? null
+                        : <Image style={styles.image} source={require("../../Assets/Pictures/fb.jpg")} />
+                        }
                         <Text style={styles.displayNameText}>
                             {this.props.data.displayName}
                         </Text>

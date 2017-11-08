@@ -17,12 +17,13 @@ import {hideFlashNotification} from "./Redux/Modules/FlashNotification"
 import {Tabs} from "./Containers/NavigationContainer/RootNavigator"
 import {getLocation} from "./API/LocationAPI"
 import {setLocation} from "./Redux/Modules/Location"
+import {fetchUserChats} from "./Redux/Modules/UserChats"
 
 
 
 class App extends Component {
 
-    componentDidMount(){
+    componentWillMount(){
         getLocation().then((location) => {
             firebaseAuth.onAuthStateChanged((user) => this.props.dispatch(onAuthChanged(user)))
             this.props.dispatch(setLocation(location))
@@ -30,6 +31,13 @@ class App extends Component {
             Alert.alert("Something went wrong while getting position")
             console.log(error.message)
         })
+    }
+
+    //fetch user chats
+    componentWillReceiveProps(nextProps){
+        if(nextProps.uid !== this.props.uid){
+            this.props.dispatch(fetchUserChats(nextProps.uid))
+        }
     }
 
     handleHideNotification = () => {
@@ -59,8 +67,9 @@ class App extends Component {
     }
 }
 
-function mapStateToProps({Authentication, FlashNotification}){
+function mapStateToProps({Authentication, FlashNotification, UserInfo}){
     return {
+        uid: UserInfo.uid,
         isAuthenticating: Authentication.isAuthenticating,
         isAuth: Authentication.isAuth,
         showFlashNotification: FlashNotification.showFlashNotification,

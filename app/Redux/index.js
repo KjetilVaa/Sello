@@ -3,3 +3,4 @@ export {Authentication} from "./Modules/Authentication";
 export {FlashNotification} from "./Modules/FlashNotification";
 export {Location} from "./Modules/Location";
 export {Books} from "./Modules/Books";
+export {UserChats} from "./Modules/UserChats";

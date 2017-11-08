@@ -29,7 +29,7 @@ class Profile extends Component{
                 <View style={styles.upperContainer}>
                 </View>
                 <View style={styles.middleContainer}>
-                    <Image source={{uri: this.props.photoURL}} style={styles.image}/>
+                    <Image source={require("../../Assets/Pictures/fb.jpg")} style={styles.image}/>
                     <Text style={styles.displayNameText}>
                         {this.props.displayName}
                     </Text>
